@@ -24,6 +24,9 @@
  */
 package org.spongepowered.mod.registry;
 
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.world.WorldServer;
+import org.spongepowered.api.GameProfile;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.immutable.item.ImmutableSpawnableData;
 import org.spongepowered.api.data.manipulator.mutable.item.SpawnableData;
@@ -31,6 +34,8 @@ import org.spongepowered.common.data.SpongeDataRegistry;
 import org.spongepowered.common.data.manipulator.immutable.item.ImmutableSpongeSpawnableData;
 import org.spongepowered.common.data.manipulator.mutable.item.SpongeSpawnableData;
 import org.spongepowered.common.data.property.SpongePropertyRegistry;
+import org.spongepowered.common.world.PlayerSimulatorFactory;
+import org.spongepowered.mod.SpongeFakePlayer;
 import org.spongepowered.mod.data.SpawnableDataProcessor;
 import org.spongepowered.mod.data.SpawnableEntityTypeValueProcessor;
 
@@ -51,6 +56,15 @@ public class SpongeForgeModuleRegistry {
 
         // Value registration
         dataRegistry.registerValueProcessor(Keys.SPAWNABLE_ENTITY_TYPE, new SpawnableEntityTypeValueProcessor());
+
+
+        new PlayerSimulatorFactory() {
+
+            @Override
+            protected EntityPlayerMP createPlayer(WorldServer world, GameProfile profile) {
+                return new SpongeFakePlayer(world, (com.mojang.authlib.GameProfile) profile);
+            }
+        };
     }
 
 }
