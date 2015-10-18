@@ -40,20 +40,17 @@ import org.spongepowered.api.block.trait.EnumTrait;
 import org.spongepowered.api.block.trait.EnumTraits;
 import org.spongepowered.api.block.trait.IntegerTrait;
 import org.spongepowered.api.block.trait.IntegerTraits;
-import org.spongepowered.api.data.Property;
 import org.spongepowered.api.entity.EntityType;
 import org.spongepowered.api.item.ItemType;
 import org.spongepowered.api.item.ItemTypes;
 import org.spongepowered.api.item.inventory.ItemStack;
 import org.spongepowered.api.item.inventory.ItemStackSnapshot;
-import org.spongepowered.api.text.translation.Translation;
 import org.spongepowered.api.util.annotation.NonnullByDefault;
 import org.spongepowered.api.world.gen.PopulatorType;
 import org.spongepowered.common.data.property.SpongePropertyRegistry;
 import org.spongepowered.common.entity.SpongeEntityType;
 import org.spongepowered.common.registry.RegistryHelper;
 import org.spongepowered.common.registry.SpongeGameRegistry;
-import org.spongepowered.common.text.translation.SpongeTranslation;
 import org.spongepowered.common.world.gen.SpongePopulatorType;
 import org.spongepowered.mod.SpongeMod;
 
@@ -64,8 +61,8 @@ import java.util.Optional;
 @NonnullByDefault
 public class SpongeModGameRegistry extends SpongeGameRegistry {
 
-    public static final Item NONE_ITEM = new Item().setUnlocalizedName("none").setMaxDamage(0).setMaxStackSize(0);
-    public static final ItemStack NONE = (ItemStack)new net.minecraft.item.ItemStack(NONE_ITEM);
+    public static final Item NONE_ITEM = new Item().setUnlocalizedName("none").setMaxDamage(0).setMaxStackSize(1);
+    public static final ItemStack NONE = (ItemStack)new net.minecraft.item.ItemStack(NONE_ITEM, 1);
     private Map<String, EnumTrait<?>> enumTraitMappings = Maps.newHashMap();
     private Map<String, IntegerTrait> integerTraitMappings = Maps.newHashMap();
     private Map<String, BooleanTrait> booleanTraitMappings = Maps.newHashMap();
