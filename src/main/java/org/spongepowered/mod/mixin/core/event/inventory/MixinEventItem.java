@@ -34,6 +34,7 @@ import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.entity.EntitySnapshot;
 import org.spongepowered.api.entity.Item;
 import org.spongepowered.api.event.cause.Cause;
+import org.spongepowered.api.event.cause.NamedCause;
 import org.spongepowered.api.event.entity.AffectEntityEvent;
 import org.spongepowered.api.event.entity.ExpireEntityEvent;
 import org.spongepowered.api.event.item.inventory.DropItemEvent;
@@ -105,6 +106,7 @@ public abstract class MixinEventItem extends MixinEventEntity implements AffectE
     static abstract class Toss extends MixinEventItem implements DropItemEvent.Dispense {
 
         @Shadow public EntityPlayer player;
+        private Cause cause = Cause.of(NamedCause.source(this.player));
 
         @Override
         public World getTargetWorld() {
@@ -113,7 +115,7 @@ public abstract class MixinEventItem extends MixinEventEntity implements AffectE
 
         @Override
         public Cause getCause() {
-            return Cause.of(this.player);
+            return this.cause;
         }
     }
 
