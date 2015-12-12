@@ -38,7 +38,7 @@ import org.spongepowered.common.launch.transformer.SpongeSuperclassRegistry;
 
 import java.util.Map;
 
-@IFMLLoadingPlugin.MCVersion("1.8")
+@IFMLLoadingPlugin.MCVersion("1.8.8")
 public class SpongeCoremod implements IFMLLoadingPlugin {
 
     public static final class TokenProvider implements IEnvironmentTokenProvider {
@@ -84,7 +84,6 @@ public class SpongeCoremod implements IFMLLoadingPlugin {
                 .addConfiguration("mixins.common.api.json")
                 .addConfiguration("mixins.common.core.json")
                 .addConfiguration("mixins.common.bungeecord.json")
-                .addConfiguration("mixins.common.eulashutdown.json")
                 .addConfiguration("mixins.common.timings.json")
                 .addConfiguration("mixins.forge.core.json")
                 .addConfiguration("mixins.forge.entityactivation.json")

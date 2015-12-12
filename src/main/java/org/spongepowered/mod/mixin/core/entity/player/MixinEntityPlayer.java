@@ -75,7 +75,7 @@ public abstract class MixinEntityPlayer extends MixinEntityLivingBase implements
     @Overwrite
     @Override
     protected void damageEntity(DamageSource damageSource, float damage) {
-        ((IMixinEntityLivingBase) this).damageEntityHook(damageSource, damage);
+        this.damageEntityHook(damageSource, damage);
     }
 
     // Restore methods to original as we handle PlayerTossEvent in DropItemEvent

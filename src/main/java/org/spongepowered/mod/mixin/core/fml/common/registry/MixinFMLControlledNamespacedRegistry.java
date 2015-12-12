@@ -26,40 +26,30 @@ package org.spongepowered.mod.mixin.core.fml.common.registry;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import net.minecraftforge.fml.common.registry.GameData;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.FMLControlledNamespacedRegistry;
 import org.spongepowered.api.block.BlockType;
 import org.spongepowered.api.item.ItemType;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.common.registry.type.BlockTypeRegistryModule;
 import org.spongepowered.common.registry.type.ItemTypeRegistryModule;
 
-@Mixin(value = GameData.class, remap = false)
-public abstract class MixinGameData {
+@Mixin(FMLControlledNamespacedRegistry.class)
+public class MixinFMLControlledNamespacedRegistry<I> {
 
-    // Vanilla
+    @Shadow private Class<I> superType;
 
-    @Inject(method = "register", at = @At("HEAD"))
-    public void onRegister(Object material, String id, int idHint, CallbackInfoReturnable<Integer> cir) {
-        if (material instanceof Block) {
-            BlockTypeRegistryModule.getInstance().registerFromGameData(id, (BlockType) material);
-        } else if (material instanceof Item) {
-            ItemTypeRegistryModule.getInstance().registerFromGameData(id, (ItemType) material);
+    @Inject(method = "add", at = @At("RETURN"))
+    public void onAdd(int id, ResourceLocation name, I thing, CallbackInfoReturnable<Integer> cir) {
+        if (this.superType == Block.class) {
+            BlockTypeRegistryModule.getInstance().registerFromGameData(name.toString(), (BlockType) thing);
+        } else if (this.superType == Item.class) {
+            ItemTypeRegistryModule.getInstance().registerFromGameData(name.toString(), (ItemType) thing);
         }
-    }
-
-    // Mods
-
-    @Inject(method = "registerBlock(Lnet/minecraft/block/Block;Ljava/lang/String;I)I", at = @At(value = "HEAD"))
-    private void onRegisterBlock(Block block, String name, int idHint, CallbackInfoReturnable<Integer> cir) {
-        BlockTypeRegistryModule.getInstance().registerFromGameData(name, (BlockType) block);
-    }
-
-    @Inject(method = "registerItem(Lnet/minecraft/item/Item;Ljava/lang/String;I)I", at = @At(value = "HEAD"))
-    private void onRegisterItem(Item item, String name, int idHint, CallbackInfoReturnable<Integer> cir) {
-        ItemTypeRegistryModule.getInstance().registerFromGameData(name, (ItemType) item);
     }
 
 }
