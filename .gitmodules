@@ -1,3 +1,4 @@
 [submodule "SpongeCommon"]
 	path = SpongeCommon
-	url = https://github.com/SpongePowered/SpongeCommon.git
+	url = https://github.com/sanman00/SpongeCommon.git
+	branch = healing-source-data-impl
